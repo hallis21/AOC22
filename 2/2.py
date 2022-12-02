@@ -1,9 +1,9 @@
+# Part 1
 # with open("inp.txt", "r") as f:
     # results = 0
     # score_table = {"A":{"A":4, "B":8, "C":3}, "B":{"A":1, "B":5, "C":9}, "C":{"A":7, "B":2, "C":6}}
     # for line in f:
     #     bits = line.split()
-    #     # Part 1
     #     translate = {"X": "A", "Y": "B", "Z": "C"}
     #     bits[1] = translate[bits[1]]
     #     results += score_table[bits[0]][bits[1]]
