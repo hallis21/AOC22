@@ -9,7 +9,4 @@
     #     results += score_table[bits[0]][bits[1]]
 
 # 'On' soulution
-res = 0
-res_table = {"A":{"X":3,"Y":4, "Z":8}, "B":{"X":1,"Y":5,"Z":9}, "C":{"X":2,"Y":6,"Z":7}}
-[res := res +res_table[x[0]][x[2]] for x in open("inp.txt", "r").readlines()]
-print(res)
+print(sum([{"A":{"X":3,"Y":4, "Z":8}, "B":{"X":1,"Y":5,"Z":9}, "C":{"X":2,"Y":6,"Z":7}}[x[0]][x[2]] for x in open("inp.txt", "r").readlines()]))

@@ -1,7 +1,5 @@
 with open("inp.txt", "r") as f:
     lines = f.readlines()
-    
-    
     # Sum all lines in the file, they are int
     # If a blank line appears in the file, add the sum to a list and start over
     s = 0
@@ -20,6 +18,12 @@ with open("inp.txt", "r") as f:
         else:
             s += int(line.strip())
     el.sort()
-    # print(el[-1]+el[-2]+el[-3])
-            
-            
+    print(el[-1]+el[-2]+el[-3])
+    
+    
+
+print(sum(sorted([sum([int(y) for y in x.split("\n")]) for x in open("inp.txt", "r").read().split("\n\n")])[-3:]))
+
+# split by \n\n
+# split that by \n
+# add partitions
