@@ -1,6 +1,7 @@
 
 
 
+
 print(sum([1 for l in [[set(range(int(x),int(y)+1)) for x,y in [s.split(",")[0].split("-")]][0].\
     intersection([set(range(int(x),int(y)+1)) for x,y in [s.split(",")[1].split("-")]][0]) for s in open("i.txt").read().split("\n")] if l]))
  
