@@ -24,36 +24,31 @@ for line in open("9.in"):
             movements.append(knot_pos[0])
     
 
-    for i in range(1,10):
-        delta_pos = (knot_pos[i-1][0]-last_pos[i-1][0], knot_pos[i-1][1]-last_pos[i-1][1])
+    for i in range(1,2):
+        delta_pos = (knot_pos[i][0]-last_pos[i-1][0], knot_pos[i][1]-last_pos[i-1][1])
         last_pos[i-1] = knot_pos[i-1]
         if distance(knot_pos[i], knot_pos[i-1]) > 1:
             knot_pos[i] = (knot_pos[i-1][0]-delta_pos[0], knot_pos[i-1][1]-delta_pos[1])
+    print(knot_pos[0])
             # last_pos[i] = knot_pos[i]
+        # else: break
+        
+        
+        
+        
 
-print(knot_pos[0])
+print(knot_pos[1])
 # def sim_knot(new_movement, knot_i)
 
 
 # Get the distance between two points, if they are diagonal, it should return 1
 
 
-def print_grid(mov, l,r,u,d):
-    to_print = []
-    for x in range(l,r):
-        tp = ""
-        for y in range(u,d):
-            if (x,y) == (0,0):
-                tp+="s" 
-            elif (x,y) in mov:
-                tp+="#"
-            else:
-                tp+="."
-        to_print.append(tp)
-    print("\n".join(to_print[::-1]))
 
+    
+print()
 tail_pos = (0,0)
-tail_movements = []
+tail_movements = [(0,0)]
 last_head_pos = (0,0)
 
 for m in movements:
@@ -63,6 +58,7 @@ for m in movements:
     if distance(tail_pos, m) > 1:
         tail_movements.append((m[0]-delta_pos[0], m[1]-delta_pos[1]))
         tail_pos = (m[0]-delta_pos[0], m[1]-delta_pos[1])
+        print(tail_pos)
         # print("\n")
 print(tail_pos)
 
