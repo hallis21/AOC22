@@ -88,8 +88,8 @@ def explore(current, allowance, visited, path):
     # print(current.name, allowance, visited)
     cu_i = tunnels_name.index(current)
     for neighbor in [x for x in tunnels_name if distance_matrix[cu_i][tunnels_name.index(x)] > 0]:
-        if visited == [set('AA')]*len(tunnels_name):
-            print(tunnels_name.index(neighbor))
+        if current == 'AA' and visited == [set()]*len(tunnels_name):
+            print(neighbor)
         if neighbor not in visited[cu_i]:
             visited[cu_i].add(neighbor)
             paths.update(explore(neighbor, allowance - distance_matrix[cu_i][tunnels_name.index(neighbor)], visited, path+f",{current}"))#path + f"{current}({total_flow})->"))
@@ -97,13 +97,21 @@ def explore(current, allowance, visited, path):
     if not paths: return {path[1:]}
     return paths
 
-paths = explore('AA', 30, [set()]*len(tunnels_name), "")
+paths = explore('AA', 35, [set()]*len(tunnels_name), "")
+
+# Find the max length of the paths
+# split on ","
+print("Finding max length...")
+print(max([len(x.split(",")) for x in paths]))
+
+exit()
 # Write all the paths to a file, new line seperated
 # print(paths)
 
-
-
-for path in paths:
+print("Exploring paths...")
+all_total = []
+for i, path in enumerate(paths):
+    if i % 1000000: print(f"{i}/\n{len(paths)}")
     # split the path into two parts
     # If there is an odd number of steps, the first list will have one more element
     # If there is an even number of steps, the first list will have the same number of elements as the second list
@@ -111,15 +119,45 @@ for path in paths:
     parts = [path.split(",")[i::2] for i in range(2)]
     parts[1].insert(0, "AA")
 
-    # replace the name of the node with the distance to the previous node
+    # replace the name of the node with the distance to the previous node, and flowrate
+    new_parts = [[], []]
     for i in range(len(parts)):
         for j in range(len(parts[i])):
             if j == 0:
+                new_parts[i].append((0, 0))
                 continue
-    print(parts)
-
-
+            new_parts[i].append((distance_matrix[tunnels_name.index(parts[i][j-1])][tunnels_name.index(parts[i][j])], tunnels[parts[i][j]].flowrate))
     
+    
+    # print(parts)
+    # Check if part is l
+    # l = [['AA', 'JJ', 'BB', 'CC'], ['AA', 'DD', 'HH', 'EE']]
+    # pog = False
+    # if parts[0] == l[0] and parts[1] == l[1]:
+    #     pog = True   
+
+    totals = [[], []]
+    times = [[], []]
+    for i in range(len(new_parts)):
+        allowance = 26
+        for j in range(len(new_parts[i])):
+            allowance -= new_parts[i][j][0]+1
+            totals[i].append(new_parts[i][j][1])
+            times[i].append(allowance)
+    # if pog: 
+    #     print(parts, totals)
+
+    current = 0
+    total = 0
+    for t in range(1, 27):
+        if 26-t in times[0]:
+            current += totals[0][times[0].index(26-t)]
+        if 26-t in times[1]:
+            current += totals[1][times[1].index(26-t)]
+        total += current
+    all_total.append(total)
+print()
+print(max(all_total))
 
 
 
