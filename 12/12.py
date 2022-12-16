@@ -17,6 +17,45 @@ with open('12.txt', 'r') as f:
         game_board[-1] = [ord(char)-97 for char in game_board[-1]]
 
 
+starts = lambda x: (x, start, set()) #[(i, j) for i in range(len(x)) for j in range(len(x[0])) if x[i][j] == 0])
+starts2 = lambda x: [(i, j) for i in range(len(x)) for j in range(len(x[0])) if x[i][j] == 0]
+
+
+# Find legal moves for a cell (i,j) in game board gb
+neighbors = lambda cell, gb: [x for x in [(cell[0] - 1, cell[1]), (cell[0] + 1, cell[1]), (cell[0], cell[1] - 1), (cell[0], cell[1] + 1)] \
+    if (x[0] >= 0 and x[0] < len(gb) and x[1] >= 0 and x[1] < len(gb[0])) and (gb[x[0]][x[1]] == gb[cell[0]][cell[1]] + 1\
+   or gb[x[0]][x[1]] <= gb[cell[0]][cell[1]])]   
+
+gb = starts([[ord(x)-97 if x not in ['S', 'E'] else 0 if x=='S' else 25 for x in list(line.strip())] for line in open("12.txt")])
+
+s2 = starts2([[ord(x)-97 if x not in ['S', 'E'] else 0 if x=='S' else 25 for x in list(line.strip())] for line in open("12.txt")])
+
+
+
+
+
+bfs = lambda cell, visited, gb, s: [(1, bfs(cell, visited+[cell], gb, s+1))[1] if s < 400 else (s+1 if gb[cell[0]][cell[1]] == 25 else 10000) for cell in neighbors(cell, gb) if cell not in visited]
+
+
+flatten_nested = lambda x: [item for sublist in x for item in sublist]
+recursive_flatten = lambda x: [item for sublist in x for item in (recursive_flatten(sublist) if isinstance(sublist, list) else [sublist])]
+
+
+print(min([min(recursive_flatten(bfs(start_cell, [], gb[0], 1))) for start_cell in s2]))
+
+
+
+
+
+
+
+# for each cell, check updownleftright, if legal, do recursive call
+# if not legal, return 0
+
+
+
+
+exit()
 # print game board
 print("\n".join(["".join([chr(char+97) for char in line]) for line in game_board]))
 # exit()
@@ -46,7 +85,6 @@ while not found:
                     found = True
                     break
                 
-    print(steps)
                 
 
             
